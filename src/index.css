@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Arvo&display=swap");
+button {
+  outline: none;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  font-size: 1.8vw;
+  align-items: center;
+  height: 100%;
+}
+
+div.add-button.after {
+  width: 50%;
+}
+
+@media only screen and (max-width: 800px) {
+  div.add-button.after {
+    width: 90%;
+  }
+}
+
+.debug {
+  border: solid black 3px;
+  font-size: xx-large;
+}
+
+button:hover {
+  box-shadow: #0084ff 0px 5px 10px;
+}
+
+.fas:hover {
+  color: #2315e0;
+}
+
+.fas.fa-times:hover {
+  color: #950c0c;
+}
+
+i {
+  font-size: 1.5vw;
+  padding: 10px 1vw;
+  height: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+  i {
+    font-size: 3.6vw;
+    padding: 10px 8px;
+  }
+}
+
+body {
+  margin: 10px;
+  font-family: "Arvo", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #85bff1;
+  /* fallback for old browsers */
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #85bff1, #55b7f8);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /* display: flex;
+  justify-content: center; */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+html,
+body {
+  height: 98%;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapper {
+  margin-bottom: 1rem;
+  width: 50%;
+  height: fit-content;
+}
+
+@media only screen and (max-width: 800px) {
+  .wrapper {
+    width: 90%;
+  }
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.clock.buttons {
+  /* clock and buttons div */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 13px 0 13px 0;
+}
+
+input {
+  width: max-content;
+  border-radius: 5px;
+  text-align: center;
+  color: #232527;
+  background-color: rgba(255, 255, 255, 0.568);
+}
+
+input:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 10px;
+}
+
+.actual-timer {
+  color: rgba(255, 255, 255, 0.568);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.8vw;
+  margin-right: 20px;
+}
+
+.actual-timer div {
+  /* background-color: rgb(82, 82, 82); */
+  background-color: rgba(255, 255, 255, 0.568);
+  border-radius: 10px;
+  border: 1px solid #404549;
+  color: #404549;
+  padding: 3px 10px;
+  margin: 5px 0 5px 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .actual-timer {
+    font-size: 3.6vw;
+  }
+}
+
+.clock {
+  font-size: 1rem;
+}

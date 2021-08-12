@@ -1,0 +1,11 @@
+input {
+  width: max-content;
+  border-radius: 5px;
+  text-align: center;
+  color: #232527;
+  background-color: rgba(255, 255, 255, 0.568);
+}
+
+input:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 10px;
+}

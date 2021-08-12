@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Arvo&display=swap");
+@import "./media-mixins.scss";
+
+// * {
+//   transition-duration: 0s;
+// }
+
+body {
+  margin: 10px;
+  font-family: "Arvo", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #85bff1; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #85bff1,
+    #55b7f8
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #85bff1,
+    #55b7f8
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /* display: flex;
+  justify-content: center; */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+html,
+body {
+  height: 98%;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapper {
+  margin-bottom: 1rem;
+  width: 50%;
+  height: fit-content;
+  @include phone-media {
+    width: 90%;
+  }
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.clock.buttons {
+  /* clock and buttons div */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 13px 0 13px 0;
+}

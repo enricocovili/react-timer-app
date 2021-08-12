@@ -1,0 +1,54 @@
+button {
+  outline: none;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  font-size: 1.8vw;
+  align-items: center;
+  height: 100%;
+}
+
+div.add-button.after {
+  width: 50%;
+}
+
+@media only screen and (max-width: 800px) {
+  div.add-button.after {
+    width: 90%;
+  }
+}
+
+.debug {
+  border: solid black 3px;
+  font-size: xx-large;
+}
+
+button:hover {
+  box-shadow: #0084ff 0px 5px 10px;
+}
+
+.fas:hover {
+  color: #2315e0;
+}
+
+.fas.fa-times:hover {
+  color: #950c0c;
+}
+
+i {
+  font-size: 1.5vw;
+  padding: 10px 1vw;
+  height: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+  i {
+    font-size: 3.6vw;
+    padding: 10px 8px;
+  }
+}
