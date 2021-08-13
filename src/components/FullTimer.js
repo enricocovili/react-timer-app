@@ -54,7 +54,12 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
       {/* <TimerListContext.Provider> */}
       <div className="title-bar">
         <h2>{id.substring(0, id.lastIndexOf(" "))}</h2>
-        <button onClick={() => removeTimer()}>
+        <button
+          onClick={() => {
+            // var idNumber = id.substring(id.lastIndexOf(" "), id.length);
+            removeTimer();
+          }}
+        >
           <i className="fas fa-times button-action"></i>
         </button>
       </div>
