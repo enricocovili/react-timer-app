@@ -7,7 +7,8 @@ body {
   background: #85bff1;
   /* fallback for old browsers */
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #85bff1, #55b7f8);
+  background: -webkit-gradient(linear, left top, right top, from(#85bff1), to(#acc5d6));
+  background: linear-gradient(to right, #85bff1, #acc5d6);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   /* display: flex;
   justify-content: center; */
@@ -23,14 +24,23 @@ body {
 }
 
 #main {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .wrapper {
   margin-bottom: 1rem;
   width: 50%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
   height: fit-content;
 }
 
@@ -41,15 +51,37 @@ body {
 }
 
 .title-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 div.clock.buttons {
   /* clock and buttons div */
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: 13px 0 13px 0;
+}
+
+div.add-button.after {
+  width: 50%;
+}
+
+@media only screen and (max-width: 800px) {
+  div.add-button.after {
+    width: 90%;
+  }
 }

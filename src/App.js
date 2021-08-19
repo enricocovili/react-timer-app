@@ -1,29 +1,11 @@
 import FullTimer from "./components/FullTimer";
-import React, { useEffect, useState } from "react";
+import React, {  /* useEffect ,*/ useState } from "react";
+import { IconButton } from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add';
 import "./index.css";
 
 export default function App() {
   const [timerList, setTimerList] = useState([]);
-
-  function returnButtonDiv(position) {
-    return document.getElementsByClassName(`add-button ${position}`)[0];
-  }
-
-  useEffect(() => {
-    // console.log("useeffet");
-    let central = "before",
-      left = "after";
-    let addDivButton = returnButtonDiv(central);
-    if (addDivButton) {
-      if (timerList.length === 0) return;
-    } else {
-      addDivButton = returnButtonDiv(left);
-      if (timerList.length === 0) {
-        [central, left] = [left, central];
-      } else return;
-    }
-    addDivButton.classList.replace(central, left);
-  }, [timerList]);
 
   function removeTimer(timer) {
     setTimerList((timerList) => timerList.filter((t) => t.id !== timer.id));
@@ -39,8 +21,8 @@ export default function App() {
           removeTimer={() => removeTimer(timer)}
         />
       ))}
-      <div className="add-button before">
-        <button
+      <div className={timerList.length === 0 ? "add-button before" : "add-button after"}>
+        <IconButton 
           onClick={() => {
             // add a new FullTimer component
             const time = new Date();
@@ -54,8 +36,8 @@ export default function App() {
             ]);
           }}
         >
-          <i className="fas fa-plus"></i>
-        </button>
+          <AddIcon />
+        </IconButton>
       </div>
     </div>
   );

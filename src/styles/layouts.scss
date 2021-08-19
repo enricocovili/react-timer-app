@@ -14,12 +14,12 @@ body {
   background: -webkit-linear-gradient(
     to right,
     #85bff1,
-    #55b7f8
+    #acc5d6
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
     #85bff1,
-    #55b7f8
+    #acc5d6
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   /* display: flex;
   justify-content: center; */
@@ -62,4 +62,11 @@ div.clock.buttons {
   justify-content: space-between;
   align-items: center;
   margin: 13px 0 13px 0;
+}
+
+div.add-button.after {
+  width: 50%;
+  @include phone-media {
+    width: 90%;
+  }
 }

@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { useTimer } from "react-timer-hook";
 import Swal from "sweetalert2";
+import { TextField } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
+import ReplayIcon from '@material-ui/icons/Replay';
+
 // import { TimerListContext } from "../contexts/timerListContext";
 import "../index.css";
 
@@ -33,84 +40,67 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
     expiryTimestamp,
     onExpire: () => {
       playAudio();
-      changePlayIcon(null);
     },
   });
 
   const [input, setInput] = useState("");
-
-  function changePlayIcon(Restart) {
-    let buttonClass = `fa-${!isRunning ? "play" : "pause"}`;
-    let futureClass = `fa-${isRunning ? "play" : "pause"}`;
-    if (Restart) {
-      futureClass = "fa-play";
-    }
-    const newClass = document.getElementById(id);
-    newClass.classList.replace(buttonClass, futureClass);
-  }
 
   return (
     <section className="wrapper">
       {/* <TimerListContext.Provider> */}
       <div className="title-bar">
         <h2>{id.substring(0, id.lastIndexOf(" "))}</h2>
-        <button
+        <IconButton
+          aria-label="delete"
+          color="default"
           onClick={() => {
-            // var idNumber = id.substring(id.lastIndexOf(" "), id.length);
             removeTimer();
           }}
         >
-          <i className="fas fa-times button-action"></i>
-        </button>
+          <DeleteIcon />
+        </IconButton>
       </div>
-      <input
+      <TextField
         placeholder="INSERT TIMER TIME"
         value={input}
         onInput={(e) => setInput(e.target.value)}
-      ></input>
+      ></TextField>
       <div className="clock buttons">
         <div className="clock">
           <div className="actual-timer">
+            <div className="days">{days}</div>:
             <div className="hours">{hours}</div>:
             <div className="minutes">{minutes}</div>:
-            <div className="days">{days}</div>:
             <div className="seconds">{seconds}</div>
           </div>
         </div>
         <div className="buttons">
-          <button
+          <IconButton
             onClick={() => {
               if (!isRunning) {
                 if (days + hours + minutes + seconds === 0) {
                   // console.log("init start");
                   let time = parseTime(input);
                   restart(time);
-                  changePlayIcon(null);
                 } else {
                   resume();
                 }
               } else {
                 pause();
               }
-              changePlayIcon(null);
             }}
           >
-            <i id={id} className="fas fa-play button-action"></i>
-          </button>
-          <button
+            {!isRunning ? <PlayArrowIcon /> : <PauseIcon />}
+          </IconButton>
+          <IconButton
             onClick={() => {
               let time = parseTime(input);
               restart(time);
-              changePlayIcon("start");
               pause();
             }}
           >
-            <i
-              className="fas fa-redo button-action"
-              aria-hidden="true"
-              src="https://img.icons8.com/fluency/48/000000/recurring-appointment.png"
-            ></i>
-          </button>
+            <ReplayIcon />
+          </IconButton>
         </div>
       </div>
       <hr />
