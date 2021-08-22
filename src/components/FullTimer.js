@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useTimer } from "react-timer-hook";
-import Swal from "sweetalert2";
-import { TextField } from "@material-ui/core";
-import { IconButton } from "@material-ui/core";
+import React, { useState } from 'react';
+import { useTimer } from 'react-timer-hook';
+import Swal from 'sweetalert2';
+import { TextField } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
@@ -114,19 +114,19 @@ function parseTime(input) {
     return: Date()
   */
   let timerTime;
-  let lastLetter = input.slice(input.length - 1, input.length).toLowerCase();
-  if (lastLetter === "m") {
-    // minutes
-    timerTime = parseInt(input) * 60;
-  } else if (lastLetter === "h") {
-    // hours
-    timerTime = parseInt(input) * 60 ** 2;
-  } else if (lastLetter === "d") {
-    // days
-    timerTime = parseInt(input) * 60 ** 2 * 24;
-  } else {
-    // seconds
-    timerTime = parseInt(input);
+  switch (input.slice(input.length - 1, input.length).toLowerCase()) {
+    default:
+      timerTime = parseInt(input);
+      break;
+    case "m":
+      timerTime = parseInt(input) * 60;
+      break;
+    case "h":
+      timerTime = parseInt(input) * 60 ** 2;
+      break;
+    case "d":
+      timerTime = parseInt(input) * 60 ** 2 * 24;
+      break;
   }
   const time = new Date();
   time.setSeconds(time.getSeconds() + timerTime);
