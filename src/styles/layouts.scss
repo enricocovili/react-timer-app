@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Arvo&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&display=swap");
 @import "./media-mixins.scss";
 
 // * {
@@ -7,7 +7,7 @@
 
 body {
   margin: 10px;
-  font-family: "Arvo", sans-serif;
+  font-family: "Roboto Mono", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #85bff1; /* fallback for old browsers */
@@ -25,11 +25,6 @@ body {
   justify-content: center; */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 html,
 body {
   height: 98%;
@@ -42,12 +37,14 @@ body {
 }
 
 .wrapper {
-  margin-bottom: 1rem;
-  width: 50%;
-  height: fit-content;
-  @include phone-media {
-    width: 90%;
-  }
+  // border: 2px solid red;
+  box-sizing: border-box;
+  margin-bottom: 3vh;
+  width: unquote("max(400px, 70vw)");
+  // padding: 0 unquote("clamp(5vw, 3rem, 5rem)");
+  // min-width: 70vw;
+  // padding: 0 30vw;
+  // margin: 0 30vw;
 }
 
 .title-bar {
@@ -61,12 +58,10 @@ div.clock.buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 13px 0 13px 0;
+  margin: 2vh 0;
 }
 
 div.add-button.after {
-  width: 50%;
-  @include phone-media {
-    width: 90%;
-  }
+  box-sizing: border-box;
+  width: unquote("max(400px, 70vw)");
 }

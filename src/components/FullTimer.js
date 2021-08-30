@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import { useTimer } from 'react-timer-hook';
-import Swal from 'sweetalert2';
-import { TextField } from '@material-ui/core';
-import { IconButton } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
-import ReplayIcon from '@material-ui/icons/Replay';
+import React, { useState, useEffect } from "react";
+import { useTimer } from "react-timer-hook";
+import Swal from "sweetalert2";
+import { TextField } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import PauseIcon from "@material-ui/icons/Pause";
+import ReplayIcon from "@material-ui/icons/Replay";
+import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
+import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
+import TimePicker from "@material-ui/lab/TimePicker";
+// import DurationPicker from "material-duration-picker";
 
-// import { TimerListContext } from "../contexts/timerListContext";
 import "../index.css";
 
 export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
@@ -18,10 +21,9 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
     var audio = new Audio("alarm.wav");
     audio.loop = true;
     audio.play();
-    Swal.fire({ title: "TIMER", icon: "error" }).then(() => {
+    Swal.fire({ title: "Time's off", icon: "warning" }).then(() => {
       audio.loop = false;
       audio.pause();
-      return null;
     });
   }
 
@@ -43,32 +45,59 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
     },
   });
 
-  const [input, setInput] = useState("");
+  function getInputStorage() {
+    let inputStorage = localStorage.getItem(`input ${id}`);
+    if (inputStorage === null)
+      return () => {
+        const time = new Date();
+        time.setHours(0, 0, 0, 0);
+        return time;
+      };
+    return new Date(JSON.parse(inputStorage.toString()));
+  }
+
+  const [input, setInput] = useState(getInputStorage());
+
+  useEffect(() => {
+    localStorage.setItem(`input ${id}`, JSON.stringify(input));
+    let time = parseTime(input);
+    restart(time);
+    pause();
+  }, [input]);
 
   return (
     <section className="wrapper">
-      {/* <TimerListContext.Provider> */}
       <div className="title-bar">
         <h2>{id.substring(0, id.lastIndexOf(" "))}</h2>
         <IconButton
           aria-label="delete"
           color="default"
           onClick={() => {
+            localStorage.removeItem(`input ${id}`);
             removeTimer();
           }}
         >
           <DeleteIcon />
         </IconButton>
       </div>
-      <TextField
-        placeholder="INSERT TIMER TIME"
-        value={input}
-        onInput={(e) => setInput(e.target.value)}
-      ></TextField>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <TimePicker
+          ampm={false}
+          ampmInClock={false}
+          views={["hours", "minutes", "seconds"]}
+          inputFormat="HH:mm:ss"
+          mask="__:__:__"
+          label="INSERT TIME HERE"
+          value={input}
+          onChange={(newValue) => {
+            setInput(newValue);
+          }}
+          renderInput={(params) => <TextField {...params} />}
+        />
+      </LocalizationProvider>
       <div className="clock buttons">
         <div className="clock">
           <div className="actual-timer">
-            <div className="days">{days}</div>:
             <div className="hours">{hours}</div>:
             <div className="minutes">{minutes}</div>:
             <div className="seconds">{seconds}</div>
@@ -79,7 +108,6 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
             onClick={() => {
               if (!isRunning) {
                 if (days + hours + minutes + seconds === 0) {
-                  // console.log("init start");
                   let time = parseTime(input);
                   restart(time);
                 } else {
@@ -104,7 +132,6 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
         </div>
       </div>
       <hr />
-      {/* </TimerListContext.Provider> */}
     </section>
   );
 }
@@ -113,22 +140,10 @@ function parseTime(input) {
   /* Input: string
     return: Date()
   */
-  let timerTime;
-  switch (input.slice(input.length - 1, input.length).toLowerCase()) {
-    default:
-      timerTime = parseInt(input);
-      break;
-    case "m":
-      timerTime = parseInt(input) * 60;
-      break;
-    case "h":
-      timerTime = parseInt(input) * 60 ** 2;
-      break;
-    case "d":
-      timerTime = parseInt(input) * 60 ** 2 * 24;
-      break;
-  }
-  const time = new Date();
+  if (!input || input === null) return new Date().setHours(0, 0, 0, 0);
+  let time = new Date();
+  let timerTime =
+    input.getHours() * 60 ** 2 + input.getMinutes() * 60 + input.getSeconds();
   time.setSeconds(time.getSeconds() + timerTime);
   return time;
 }
