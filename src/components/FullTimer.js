@@ -10,15 +10,12 @@ import ReplayIcon from "@material-ui/icons/Replay";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import TimePicker from "@material-ui/lab/TimePicker";
-// import DurationPicker from "material-duration-picker";
 
 import "../index.css";
 
 export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
-  // ID: Name of the timer + index of TimerList
-  // var contextType = TimerListContext;
   function playAudio() {
-    var audio = new Audio("alarm.wav");
+    let audio = new Audio("alarm.wav");
     audio.loop = true;
     audio.play();
     Swal.fire({ title: "Time's off", icon: "warning" }).then(() => {
@@ -27,34 +24,39 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
     });
   }
 
-  const {
-    seconds,
-    minutes,
-    hours,
-    days,
-    isRunning,
-    // start,
-    pause,
-    resume,
-    restart,
-  } = useTimer({
-    autoStart: false,
-    expiryTimestamp,
-    onExpire: () => {
-      playAudio();
-    },
-  });
+  function parseTime(input) {
+    if (!input || input === null) return getMidNight();
+    let time = new Date();
+    let durationSeconds =
+      input.getHours() * 60 ** 2 + input.getMinutes() * 60 + input.getSeconds();
+    // if the timer is set to 00:00:00
+    if (!durationSeconds) return null;
+    time.setSeconds(time.getSeconds() + durationSeconds);
+    return time;
+  }
+
+  function getMidNight() {
+    const time = new Date();
+    time.setHours(0, 0, 0, 0);
+    return time;
+  }
 
   function getInputStorage() {
     let inputStorage = localStorage.getItem(`input ${id}`);
-    if (inputStorage === null)
-      return () => {
-        const time = new Date();
-        time.setHours(0, 0, 0, 0);
-        return time;
-      };
+    if (inputStorage == "null" || !inputStorage) {
+      return getMidNight();
+    }
     return new Date(JSON.parse(inputStorage.toString()));
   }
+
+  const { seconds, minutes, hours, isRunning, pause, resume, restart } =
+    useTimer({
+      autoStart: false,
+      expiryTimestamp,
+      onExpire: () => {
+        playAudio();
+      },
+    });
 
   const [input, setInput] = useState(getInputStorage());
 
@@ -107,8 +109,9 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
           <IconButton
             onClick={() => {
               if (!isRunning) {
-                if (days + hours + minutes + seconds === 0) {
+                if (!(hours || minutes || seconds)) {
                   let time = parseTime(input);
+                  if (!time) return;
                   restart(time);
                 } else {
                   resume();
@@ -134,16 +137,4 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
       <hr />
     </section>
   );
-}
-
-function parseTime(input) {
-  /* Input: string
-    return: Date()
-  */
-  if (!input || input === null) return new Date().setHours(0, 0, 0, 0);
-  let time = new Date();
-  let timerTime =
-    input.getHours() * 60 ** 2 + input.getMinutes() * 60 + input.getSeconds();
-  time.setSeconds(time.getSeconds() + timerTime);
-  return time;
 }
