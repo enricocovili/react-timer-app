@@ -15,6 +15,7 @@ import "../index.css";
 
 export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
   function playAudio() {
+    Swal.close();
     let audio = new Audio("alarm.wav");
     audio.loop = true;
     audio.play();
@@ -43,7 +44,7 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
 
   function getInputStorage() {
     let inputStorage = localStorage.getItem(`input ${id}`);
-    if (inputStorage == "null" || !inputStorage) {
+    if (inputStorage === "null" || !inputStorage) {
       return getMidNight();
     }
     return new Date(JSON.parse(inputStorage.toString()));
@@ -66,6 +67,8 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
     restart(time);
     pause();
   }, [input]);
+
+  if (!id) return <section className="wrapper " />;
 
   return (
     <section className="wrapper">

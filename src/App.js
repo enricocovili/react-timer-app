@@ -2,6 +2,7 @@ import FullTimer from "./components/FullTimer";
 import React, { useEffect, useState } from "react";
 import { IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import Swal from "sweetalert2";
 import "./index.css";
 
 export default function App() {
@@ -9,6 +10,28 @@ export default function App() {
     let timerStorage = localStorage.getItem("timerList");
     if (!timerStorage || timerStorage === []) return [];
     return JSON.parse(timerStorage.toString());
+  }
+
+  async function createTimer() {
+    await Swal.fire({
+      title: "Enter timer's name",
+      input: "text",
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to write something!";
+        }
+      },
+    }).then((result) => {
+      const time = new Date();
+      time.setSeconds(time.getSeconds() + 0);
+      setTimerList((timerList) => [
+        ...timerList,
+        {
+          id: `${result.value} ${timerList.length}`,
+          expiryTimestamp: time,
+        },
+      ]);
+    });
   }
 
   const [timerList, setTimerList] = useState(getStorage());
@@ -38,16 +61,7 @@ export default function App() {
       >
         <IconButton
           onClick={() => {
-            // add a new FullTimer component
-            const time = new Date();
-            time.setSeconds(time.getSeconds() + 0);
-            setTimerList((timerList) => [
-              ...timerList,
-              {
-                id: window.prompt("Insert timer name") + ` ${timerList.length}`,
-                expiryTimestamp: time,
-              },
-            ]);
+            createTimer();
           }}
         >
           <AddIcon />
