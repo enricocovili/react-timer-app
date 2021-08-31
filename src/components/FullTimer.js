@@ -68,8 +68,6 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
     pause();
   }, [input]);
 
-  if (!id) return <section className="wrapper " />;
-
   return (
     <section className="wrapper">
       <div className="title-bar">
@@ -97,7 +95,17 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
           onChange={(newValue) => {
             setInput(newValue);
           }}
-          renderInput={(params) => <TextField {...params} />}
+          renderInput={(params) => (
+            <TextField
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  let time = parseTime(input);
+                  restart(time);
+                }
+              }}
+              {...params}
+            />
+          )}
         />
       </LocalizationProvider>
       <div className="clock buttons">
