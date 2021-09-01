@@ -1,7 +1,6 @@
 import FullTimer from "./components/FullTimer";
+import NavBar from "./components/NavBar";
 import React, { useEffect, useState } from "react";
-import { IconButton } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
 import Swal from "sweetalert2";
 import "./index.css";
 
@@ -46,6 +45,7 @@ export default function App() {
 
   return (
     <div id="main">
+      <NavBar createTimer={() => createTimer()} />
       {timerList.map((timer) => (
         <FullTimer
           key={timer.id}
@@ -54,19 +54,6 @@ export default function App() {
           removeTimer={() => removeTimer(timer)}
         />
       ))}
-      <div
-        className={
-          timerList.length === 0 ? "add-button before" : "add-button after"
-        }
-      >
-        <IconButton
-          onClick={() => {
-            createTimer();
-          }}
-        >
-          <AddIcon />
-        </IconButton>
-      </div>
     </div>
   );
 }

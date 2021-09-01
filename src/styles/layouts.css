@@ -7,7 +7,7 @@ body {
   background: #85bff1;
   /* fallback for old browsers */
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #85bff1, #acc5d6);
+  background: linear-gradient(to right, #00bed8, #00d9b1);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   /* display: flex;
   justify-content: center; */
@@ -42,9 +42,4 @@ div.clock.buttons {
   justify-content: space-between;
   align-items: center;
   margin: 2vh 0;
-}
-
-div.add-button.after {
-  box-sizing: border-box;
-  width: max(400px, 70vw);
 }
