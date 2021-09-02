@@ -73,6 +73,7 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
       <div className="title-bar">
         <h2>{id.substring(0, id.lastIndexOf(" "))}</h2>
         <IconButton
+          // style={{ color: "white" }}
           aria-label="delete"
           color="default"
           onClick={() => {
@@ -97,6 +98,7 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
           }}
           renderInput={(params) => (
             <TextField
+              // style={{ color: "white" }}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
                   let time = parseTime(input);
@@ -118,6 +120,7 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
         </div>
         <div className="buttons">
           <IconButton
+            // style={{ color: "white" }}
             onClick={() => {
               if (!isRunning) {
                 if (!(hours || minutes || seconds)) {
@@ -135,6 +138,7 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
             {!isRunning ? <PlayArrowIcon /> : <PauseIcon />}
           </IconButton>
           <IconButton
+            // style={{ color: "white" }}
             onClick={() => {
               let time = parseTime(input);
               restart(time);

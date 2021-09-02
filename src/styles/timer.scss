@@ -1,22 +1,17 @@
-@import "./media-mixins.scss";
+@import "./var.scss";
 
 .actual-timer {
-  color: rgba(14, 14, 14, 0.568);
-  // color: white;
+  color: $text-color;
   display: flex;
   flex-direction: row;
   align-items: center;
   font-size: unquote("max(2.5vw, 2rem)");
   div {
-    /* background-color: rgb(82, 82, 82); */
     background-color: rgba(255, 255, 255, 0.238);
     border-radius: 10px;
-    border: 1px solid #404549;
-    color: #404549;
+    border: 1px solid $text-color;
+    color: $text-color;
     padding: 3px 10px;
     margin: 5px 0 5px 0;
   }
 }
-// .clock {
-//   font-size: 1rem;
-// }

@@ -4,17 +4,12 @@ body {
   font-family: "Roboto Mono", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #85bff1;
-  /* fallback for old browsers */
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #00bed8, #00d9b1);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  /* display: flex;
-  justify-content: center; */
+  background: rgba(67, 170, 255, 0.65);
 }
 
 html,
 body {
+  color: #414756;
   height: 98%;
 }
 

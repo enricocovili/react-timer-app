@@ -16,11 +16,10 @@ export default function App() {
       title: "Enter timer's name",
       input: "text",
       inputValidator: (value) => {
-        if (!value) {
-          return "You need to write something!";
-        }
+        if (!value) return "You need to write something!";
       },
     }).then((result) => {
+      if (!result.value) return;
       const time = new Date();
       time.setSeconds(time.getSeconds() + 0);
       setTimerList((timerList) => [
