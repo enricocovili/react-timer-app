@@ -57,7 +57,8 @@ export default function App() {
           removeTimer={() => removeTimer(timer)}
           isHidden={
             !timer.id
-              .substring(0, timer.id.lastIndexOf(" ")) // id without index
+              .substring(0, timer.id.lastIndexOf(" "))
+              .toLocaleLowerCase() // id without index
               .includes(InputFilter.toLocaleLowerCase())
           }
         />
