@@ -11,18 +11,26 @@ html,
 body {
   color: #414756;
   height: 98%;
+  display: flex;
+  justify-content: center;
 }
 
 #main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 70vw;
+}
+@media only screen and (max-width: 600px) {
+  #main {
+    width: 90vw;
+  }
 }
 
 .wrapper {
   box-sizing: border-box;
   margin-bottom: 3vh;
-  width: max(400px, 70vw);
+  width: 100%;
 }
 
 .title-bar {
@@ -46,7 +54,6 @@ div.clock.buttons {
   align-items: center;
   font-size: max(2.5vw, 2rem);
 }
-
 .actual-timer div {
   background-color: rgba(255, 255, 255, 0.238);
   border-radius: 10px;

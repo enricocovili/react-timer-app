@@ -13,18 +13,24 @@ html,
 body {
   color: $text-color;
   height: 98%;
+  display: flex;
+  justify-content: center;
 }
 
 #main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 70vw;
+  @media only screen and (max-width: 600px) {
+    width: 90vw;
+  }
 }
 
 .wrapper {
   box-sizing: border-box;
   margin-bottom: 3vh;
-  width: unquote("max(400px, 70vw)");
+  width: 100%;
 }
 
 .title-bar {

@@ -70,7 +70,7 @@ export default function PrimarySearchAppBar({
   );
 
   return (
-    <Box sx={{ flexGrow: 1, width: "max(400px, 70vw)" }}>
+    <Box sx={{ flexGrow: 1, width: "100%" }}>
       <AppBar position="static">
         <Toolbar>
           <Search>
