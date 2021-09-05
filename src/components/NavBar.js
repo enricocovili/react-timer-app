@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { styled, alpha } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Box from "@material-ui/core/Box";
@@ -42,7 +42,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar({ createTimer }) {
+export default function PrimarySearchAppBar({
+  createTimer,
+  changeInputFilter,
+}) {
+  const [inputFilter, setinputFilter] = useState("");
+
+  useEffect(() => {
+    changeInputFilter(inputFilter);
+    // eslint-disable-next-line
+  }, [inputFilter]);
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -68,8 +78,15 @@ export default function PrimarySearchAppBar({ createTimer }) {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              onChange={(event) => setinputFilter(event.target.value)}
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              onKeyDown={(event) => {
+                if (event.key === "Escape") {
+                  event.target.value = "";
+                  setinputFilter("");
+                }
+              }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />

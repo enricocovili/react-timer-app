@@ -13,13 +13,20 @@ import TimePicker from "@material-ui/lab/TimePicker";
 
 import "../index.css";
 
-export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
+export default function FullTimer({
+  expiryTimestamp,
+  removeTimer,
+  id,
+  isHidden,
+}) {
+  const IdName = id.substring(0, id.lastIndexOf(" "));
+
   function playAudio() {
     Swal.close();
     let audio = new Audio("alarm.wav");
     audio.loop = true;
     audio.play();
-    Swal.fire({ title: "Time's off", icon: "warning" }).then(() => {
+    Swal.fire({ title: `${IdName}'s off`, icon: "warning" }).then(() => {
       audio.loop = false;
       audio.pause();
     });
@@ -37,6 +44,7 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
   }
 
   function getMidNight() {
+    // workaround to get 00:00:00 at timer's creation
     const time = new Date();
     time.setHours(0, 0, 0, 0);
     return time;
@@ -66,12 +74,15 @@ export default function FullTimer({ expiryTimestamp, removeTimer, id }) {
     let time = parseTime(input);
     restart(time);
     pause();
+    // eslint-disable-next-line
   }, [input]);
+
+  if (isHidden) return <></>;
 
   return (
     <section className="wrapper">
       <div className="title-bar">
-        <h2>{id.substring(0, id.lastIndexOf(" "))}</h2>
+        <h2>{IdName}</h2>
         <IconButton
           // style={{ color: "white" }}
           aria-label="delete"
