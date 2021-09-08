@@ -25,11 +25,46 @@ export default function App() {
       setTimerList((timerList) => [
         ...timerList,
         {
+          timeoutSeconds: 0,
           id: `${result.value} ${timerList.length}`,
           expiryTimestamp: time,
         },
       ]);
     });
+  }
+
+  function timeChange(timer, seconds) {
+    let newList = [...timerList];
+    const timerIndex = newList.findIndex((obj) => {
+      return obj.id === timer.id;
+    });
+    newList[timerIndex].timeoutSeconds = seconds;
+    setTimerList(newList);
+  }
+
+  function sortTimerList(sortMethod) {
+    let sorted = "";
+    switch (sortMethod) {
+      case "A-Z":
+        sorted = [...timerList].sort((a, b) => a.id.localeCompare(b.id));
+        break;
+      case "Z-A":
+        sorted = [...timerList].sort((a, b) => b.id.localeCompare(a.id));
+        break;
+      case "time-up":
+        sorted = [...timerList].sort(
+          (a, b) => a.timeoutSeconds - b.timeoutSeconds
+        );
+        break;
+      case "time-down":
+        sorted = [...timerList].sort(
+          (a, b) => b.timeoutSeconds - a.timeoutSeconds
+        );
+        break;
+      default:
+        return null;
+    }
+    setTimerList(sorted);
   }
 
   const [timerList, setTimerList] = useState(getStorage());
@@ -48,19 +83,21 @@ export default function App() {
       <NavBar
         createTimer={() => createTimer()}
         changeInputFilter={(event) => setInputFilter(event)}
+        sortList={(event) => sortTimerList(event)}
       />
       {timerList.map((timer) => (
         <FullTimer
           key={timer.id}
           id={timer.id}
-          expiryTimestamp={timer.expiryTimestamp}
-          removeTimer={() => removeTimer(timer)}
           isHidden={
             !timer.id
               .substring(0, timer.id.lastIndexOf(" "))
               .toLocaleLowerCase() // id without index
               .includes(InputFilter.toLocaleLowerCase())
           }
+          expiryTimestamp={timer.expiryTimestamp}
+          removeTimer={() => removeTimer(timer)}
+          updateTimeoutSeconds={(seconds) => timeChange(timer, seconds)}
         />
       ))}
     </div>

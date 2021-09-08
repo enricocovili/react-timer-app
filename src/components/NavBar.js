@@ -5,7 +5,9 @@ import Box from "@material-ui/core/Box";
 import Toolbar from "@material-ui/core/Toolbar";
 import InputBase from "@material-ui/core/InputBase";
 import Menu from "@material-ui/core/Menu";
+import { MenuItem } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import SortIcon from "@material-ui/icons/Sort";
 import { IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
@@ -45,34 +47,55 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar({
   createTimer,
   changeInputFilter,
+  sortList,
 }) {
   const [inputFilter, setinputFilter] = useState("");
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = (sortMethod) => {
+    setAnchorEl(null);
+    if (typeof sortMethod !== "object") sortList(sortMethod);
+  };
 
   useEffect(() => {
     changeInputFilter(inputFilter);
     // eslint-disable-next-line
   }, [inputFilter]);
 
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-    ></Menu>
-  );
-
   return (
     <Box sx={{ flexGrow: 1, width: "100%" }}>
       <AppBar position="static">
         <Toolbar>
+          <IconButton onClick={handleClick}>
+            <SortIcon
+              style={{
+                color: "white",
+                cursor: "pointer",
+                paddingRight: ".3em",
+              }}
+            />
+          </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={() => handleClose("A-Z")}>A-Z</MenuItem>
+            <MenuItem onClick={() => handleClose("Z-A")}>Z-A</MenuItem>
+            <MenuItem onClick={() => handleClose("time-up")}>
+              Time (ascending)
+            </MenuItem>
+            <MenuItem onClick={() => handleClose("time-down")}>
+              Time (descendig)
+            </MenuItem>
+          </Menu>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -101,7 +124,6 @@ export default function PrimarySearchAppBar({
           </div>
         </Toolbar>
       </AppBar>
-      {renderMenu}
     </Box>
   );
 }

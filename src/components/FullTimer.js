@@ -10,11 +10,13 @@ import ReplayIcon from "@material-ui/icons/Replay";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import TimePicker from "@material-ui/lab/TimePicker";
+import audioURL from "./../media/Leapfrog.ogg";
 
 import "../index.css";
 
 export default function FullTimer({
   expiryTimestamp,
+  updateTimeoutSeconds,
   removeTimer,
   id,
   isHidden,
@@ -23,7 +25,7 @@ export default function FullTimer({
 
   function playAudio() {
     Swal.close();
-    let audio = new Audio("alarm.wav");
+    let audio = new Audio(audioURL);
     audio.loop = true;
     audio.play();
     Swal.fire({ title: `${IdName}'s off`, icon: "warning" }).then(() => {
@@ -32,14 +34,21 @@ export default function FullTimer({
     });
   }
 
-  function parseTime(input) {
+  /**
+   * @param {Date} input - current value of TimePicker Component
+   * @param {boolean} onlySeconds - if true, parseTime return time in seconds
+   * @returns {Date|number}
+   */
+  function parseTime(input, onlySeconds) {
     if (!input || input === null) return getMidNight();
     let time = new Date();
     let durationSeconds =
       input.getHours() * 60 ** 2 + input.getMinutes() * 60 + input.getSeconds();
+    if (onlySeconds) return durationSeconds;
     // if the timer is set to 00:00:00
     if (!durationSeconds) return null;
     time.setSeconds(time.getSeconds() + durationSeconds);
+    expiryTimestamp = time;
     return time;
   }
 
@@ -71,6 +80,7 @@ export default function FullTimer({
 
   useEffect(() => {
     localStorage.setItem(`input ${id}`, JSON.stringify(input));
+    updateTimeoutSeconds(parseTime(input, true));
     let time = parseTime(input);
     restart(time);
     pause();
