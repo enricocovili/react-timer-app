@@ -89,8 +89,8 @@ export default function FullTimer({
 
   if (isHidden) return <></>;
 
-  return (
-    <section className="wrapper">
+  const TitleBar = () => {
+    return (
       <div className="title-bar">
         <h2>{IdName}</h2>
         <IconButton
@@ -105,32 +105,11 @@ export default function FullTimer({
           <DeleteIcon />
         </IconButton>
       </div>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <TimePicker
-          ampm={false}
-          ampmInClock={false}
-          views={["hours", "minutes", "seconds"]}
-          inputFormat="HH:mm:ss"
-          mask="__:__:__"
-          label="INSERT TIME HERE"
-          value={input}
-          onChange={(newValue) => {
-            setInput(newValue);
-          }}
-          renderInput={(params) => (
-            <TextField
-              // style={{ color: "white" }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  let time = parseTime(input);
-                  restart(time);
-                }
-              }}
-              {...params}
-            />
-          )}
-        />
-      </LocalizationProvider>
+    );
+  };
+
+  const RealTimer = () => {
+    return (
       <div className="clock buttons">
         <div className="clock">
           <div className="actual-timer">
@@ -170,6 +149,39 @@ export default function FullTimer({
           </IconButton>
         </div>
       </div>
+    );
+  };
+
+  return (
+    <section className="wrapper">
+      <TitleBar />
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <TimePicker
+          ampm={false}
+          ampmInClock={false}
+          views={["hours", "minutes", "seconds"]}
+          inputFormat="HH:mm:ss"
+          mask="__:__:__"
+          label="INSERT TIME HERE"
+          value={input}
+          onChange={(newValue) => {
+            setInput(newValue);
+          }}
+          renderInput={(params) => (
+            <TextField
+              // style={{ color: "white" }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  let time = parseTime(input);
+                  restart(time);
+                }
+              }}
+              {...params}
+            />
+          )}
+        />
+      </LocalizationProvider>
+      <RealTimer />
       <hr />
     </section>
   );

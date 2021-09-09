@@ -1,3 +1,5 @@
+// import FullTimer from "./components/FullTimer";
+// import NavBar from "./components/NavBar";
 import FullTimer from "./components/FullTimer";
 import NavBar from "./components/NavBar";
 import React, { useEffect, useState } from "react";
@@ -83,7 +85,7 @@ export default function App() {
       <NavBar
         createTimer={() => createTimer()}
         changeInputFilter={(event) => setInputFilter(event)}
-        sortList={(event) => sortTimerList(event)}
+        sortList={(sortMethod) => sortTimerList(sortMethod)}
       />
       {timerList.map((timer) => (
         <FullTimer
