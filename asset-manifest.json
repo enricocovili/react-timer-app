@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/react-timer-app/static/css/main.811a9a27.chunk.css",
-    "main.js": "/react-timer-app/static/js/main.1b788f66.chunk.js",
-    "main.js.map": "/react-timer-app/static/js/main.1b788f66.chunk.js.map",
+    "main.css": "/react-timer-app/static/css/main.ccd450f7.chunk.css",
+    "main.js": "/react-timer-app/static/js/main.cdf34910.chunk.js",
+    "main.js.map": "/react-timer-app/static/js/main.cdf34910.chunk.js.map",
     "runtime-main.js": "/react-timer-app/static/js/runtime-main.c93c1b44.js",
     "runtime-main.js.map": "/react-timer-app/static/js/runtime-main.c93c1b44.js.map",
-    "static/js/2.ffd28bcf.chunk.js": "/react-timer-app/static/js/2.ffd28bcf.chunk.js",
-    "static/js/2.ffd28bcf.chunk.js.map": "/react-timer-app/static/js/2.ffd28bcf.chunk.js.map",
+    "static/js/2.acbd196c.chunk.js": "/react-timer-app/static/js/2.acbd196c.chunk.js",
+    "static/js/2.acbd196c.chunk.js.map": "/react-timer-app/static/js/2.acbd196c.chunk.js.map",
     "index.html": "/react-timer-app/index.html",
-    "static/css/main.811a9a27.chunk.css.map": "/react-timer-app/static/css/main.811a9a27.chunk.css.map",
-    "static/js/2.ffd28bcf.chunk.js.LICENSE.txt": "/react-timer-app/static/js/2.ffd28bcf.chunk.js.LICENSE.txt",
-    "static/media/Leapfrog.16fda7c5.ogg": "/react-timer-app/static/media/Leapfrog.16fda7c5.ogg"
+    "static/css/main.ccd450f7.chunk.css.map": "/react-timer-app/static/css/main.ccd450f7.chunk.css.map",
+    "static/js/2.acbd196c.chunk.js.LICENSE.txt": "/react-timer-app/static/js/2.acbd196c.chunk.js.LICENSE.txt",
+    "static/media/Leapfrog.00b4adbd.ogg": "/react-timer-app/static/media/Leapfrog.00b4adbd.ogg"
   },
   "entrypoints": [
     "static/js/runtime-main.c93c1b44.js",
-    "static/js/2.ffd28bcf.chunk.js",
-    "static/css/main.811a9a27.chunk.css",
-    "static/js/main.1b788f66.chunk.js"
+    "static/js/2.acbd196c.chunk.js",
+    "static/css/main.ccd450f7.chunk.css",
+    "static/js/main.cdf34910.chunk.js"
   ]
 }
