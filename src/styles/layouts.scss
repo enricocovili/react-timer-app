@@ -41,10 +41,17 @@ body {
 
 div.clock.buttons {
   /* clock and buttons div */
+  letter-spacing: normal;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 2vh 0;
+}
+
+.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+  @media (max-width: 600px) {
+    width: 80%;
+  }
 }
 
 // INPUT - TIMEPICKER

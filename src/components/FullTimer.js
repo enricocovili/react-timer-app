@@ -76,6 +76,8 @@ export default function FullTimer({
       },
     });
 
+  const clockValues = [hours, minutes, seconds];
+
   const [input, setInput] = useState(getInputStorage());
 
   useEffect(() => {
@@ -113,9 +115,12 @@ export default function FullTimer({
       <div className="clock buttons">
         <div className="clock">
           <div className="actual-timer">
-            <div className="hours">{hours}</div>:
-            <div className="minutes">{minutes}</div>:
-            <div className="seconds">{seconds}</div>
+            {clockValues.map((item, index) => (
+              <>
+                <div>{item < 10 ? `0${item}` : item}</div>
+                {index === clockValues.length - 1 ? "" : ":"}
+              </>
+            ))}
           </div>
         </div>
         <div className="buttons">

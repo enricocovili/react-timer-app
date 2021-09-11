@@ -41,10 +41,17 @@ body {
 
 div.clock.buttons {
   /* clock and buttons div */
+  letter-spacing: normal;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 2vh 0;
+}
+
+@media (max-width: 600px) {
+  .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+    width: 80%;
+  }
 }
 
 .actual-timer {

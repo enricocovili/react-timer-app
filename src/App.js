@@ -7,6 +7,25 @@ import Swal from "sweetalert2";
 import "./index.css";
 
 export default function App() {
+  // ************************************************************************ //
+
+  // ********************* //
+  // *** STATES *** //
+  // ********************* //
+
+  // ************************************************************************ //
+
+  const [timerList, setTimerList] = useState(getStorage());
+  const [InputFilter, setInputFilter] = useState("");
+
+  // ************************************************************************ //
+
+  // *********************   //
+  // *** STATES MODIFIER *** //
+  // *********************   //
+
+  // ************************************************************************ //
+
   function getStorage() {
     let timerStorage = localStorage.getItem("timerList");
     if (!timerStorage || timerStorage === []) return [];
@@ -69,9 +88,6 @@ export default function App() {
     setTimerList(sorted);
   }
 
-  const [timerList, setTimerList] = useState(getStorage());
-  const [InputFilter, setInputFilter] = useState("");
-
   function removeTimer(timer) {
     setTimerList((timerList) => timerList.filter((t) => t.id !== timer.id));
   }
@@ -79,6 +95,14 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("timerList", JSON.stringify(timerList));
   }, [timerList]);
+
+  // ************************************************************************ //
+
+  // ********************* //
+  // *** HTML STRUCTURE *** //
+  // ********************* //
+
+  // ************************************************************************ //
 
   return (
     <div id="main">
