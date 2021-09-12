@@ -1,7 +1,7 @@
 // import FullTimer from "./components/FullTimer";
 // import NavBar from "./components/NavBar";
-import FullTimer from "./components/FullTimer";
-import NavBar from "./components/NavBar";
+import FullTimer from "./components/SingleTimer/FullTimer";
+import Searchbar from "./components/SearchBar/SearchBar";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import "./index.css";
@@ -106,7 +106,7 @@ export default function App() {
 
   return (
     <div id="main">
-      <NavBar
+      <Searchbar
         createTimer={() => createTimer()}
         changeInputFilter={(event) => setInputFilter(event)}
         sortList={(sortMethod) => sortTimerList(sortMethod)}

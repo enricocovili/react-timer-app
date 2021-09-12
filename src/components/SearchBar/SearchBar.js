@@ -5,9 +5,8 @@ import Box from "@material-ui/core/Box";
 import Toolbar from "@material-ui/core/Toolbar";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
-import { IconButton } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
 import SortButton from "./SortButton";
+import AddTimerBtn from "./AddTimerBtn";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -39,11 +38,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar({
-  createTimer,
-  changeInputFilter,
-  sortList,
-}) {
+export default function SearchBar(props) {
+  const { createTimer, changeInputFilter, sortList } = props;
   const [inputFilter, setinputFilter] = useState("");
 
   useEffect(() => {
@@ -76,16 +72,7 @@ export default function PrimarySearchAppBar({
               }}
             />
           </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <div>
-            <IconButton
-              onClick={() => {
-                createTimer();
-              }}
-            >
-              <AddIcon style={{ color: "white" }} />
-            </IconButton>
-          </div>
+          <AddTimerBtn createTimer={createTimer} />
         </Toolbar>
       </AppBar>
     </Box>

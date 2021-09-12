@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useTimer } from "react-timer-hook";
-import Swal from "sweetalert2";
 import { TextField } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -10,69 +9,20 @@ import ReplayIcon from "@material-ui/icons/Replay";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import TimePicker from "@material-ui/lab/TimePicker";
-import audioURL from "./../media/Leapfrog.ogg";
+import { parseTime, getInputStorage, playAudio, getIdName } from "./utils";
 
-import "../index.css";
+import "../../index.css";
 
-export default function FullTimer({
-  expiryTimestamp,
-  updateTimeoutSeconds,
-  removeTimer,
-  id,
-  isHidden,
-}) {
-  const IdName = id.substring(0, id.lastIndexOf(" "));
-
-  function playAudio() {
-    Swal.close();
-    let audio = new Audio(audioURL);
-    audio.loop = true;
-    audio.play();
-    Swal.fire({ title: `${IdName}'s off`, icon: "warning" }).then(() => {
-      audio.loop = false;
-      audio.pause();
-    });
-  }
-
-  /**
-   * @param {Date} input - current value of TimePicker Component
-   * @param {boolean} onlySeconds - if true, parseTime return time in seconds
-   * @returns {Date|number}
-   */
-  function parseTime(input, onlySeconds) {
-    if (!input || input === null) return getMidNight();
-    let time = new Date();
-    let durationSeconds =
-      input.getHours() * 60 ** 2 + input.getMinutes() * 60 + input.getSeconds();
-    if (onlySeconds) return durationSeconds;
-    // if the timer is set to 00:00:00
-    if (!durationSeconds) return null;
-    time.setSeconds(time.getSeconds() + durationSeconds);
-    expiryTimestamp = time;
-    return time;
-  }
-
-  function getMidNight() {
-    // workaround to get 00:00:00 at timer's creation
-    const time = new Date();
-    time.setHours(0, 0, 0, 0);
-    return time;
-  }
-
-  function getInputStorage() {
-    let inputStorage = localStorage.getItem(`input ${id}`);
-    if (inputStorage === "null" || !inputStorage) {
-      return getMidNight();
-    }
-    return new Date(JSON.parse(inputStorage.toString()));
-  }
+export default function FullTimer(props) {
+  let { expiryTimestamp, updateTimeoutSeconds, removeTimer, id, isHidden } =
+    props;
 
   const { seconds, minutes, hours, isRunning, pause, resume, restart } =
     useTimer({
       autoStart: false,
       expiryTimestamp,
       onExpire: () => {
-        playAudio();
+        playAudio(id);
       },
     });
 
@@ -91,10 +41,45 @@ export default function FullTimer({
 
   if (isHidden) return <></>;
 
-  const TitleBar = () => {
+  function TimeButtons() {
+    return (
+      <div className="buttons">
+        <IconButton
+          // style={{ color: "white" }}
+          onClick={() => {
+            if (!isRunning) {
+              if (!(hours || minutes || seconds)) {
+                let time = parseTime(input);
+                if (!time) return;
+                restart(time);
+              } else {
+                resume();
+              }
+            } else {
+              pause();
+            }
+          }}
+        >
+          {!isRunning ? <PlayArrowIcon /> : <PauseIcon />}
+        </IconButton>
+        <IconButton
+          // style={{ color: "white" }}
+          onClick={() => {
+            let time = parseTime(input);
+            restart(time);
+            pause();
+          }}
+        >
+          <ReplayIcon />
+        </IconButton>
+      </div>
+    );
+  }
+
+  function TitleBar() {
     return (
       <div className="title-bar">
-        <h2>{IdName}</h2>
+        <h2>{getIdName(id)}</h2>
         <IconButton
           // style={{ color: "white" }}
           aria-label="delete"
@@ -108,9 +93,9 @@ export default function FullTimer({
         </IconButton>
       </div>
     );
-  };
+  }
 
-  const RealTimer = () => {
+  function TimerBody() {
     return (
       <div className="clock buttons">
         <div className="clock">
@@ -123,39 +108,10 @@ export default function FullTimer({
             ))}
           </div>
         </div>
-        <div className="buttons">
-          <IconButton
-            // style={{ color: "white" }}
-            onClick={() => {
-              if (!isRunning) {
-                if (!(hours || minutes || seconds)) {
-                  let time = parseTime(input);
-                  if (!time) return;
-                  restart(time);
-                } else {
-                  resume();
-                }
-              } else {
-                pause();
-              }
-            }}
-          >
-            {!isRunning ? <PlayArrowIcon /> : <PauseIcon />}
-          </IconButton>
-          <IconButton
-            // style={{ color: "white" }}
-            onClick={() => {
-              let time = parseTime(input);
-              restart(time);
-              pause();
-            }}
-          >
-            <ReplayIcon />
-          </IconButton>
-        </div>
+        <TimeButtons />
       </div>
     );
-  };
+  }
 
   return (
     <section className="wrapper">
@@ -186,7 +142,7 @@ export default function FullTimer({
           )}
         />
       </LocalizationProvider>
-      <RealTimer />
+      <TimerBody />
       <hr />
     </section>
   );
