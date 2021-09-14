@@ -41,14 +41,12 @@ export default function App() {
       },
     }).then((result) => {
       if (!result.value) return;
-      const time = new Date();
-      time.setSeconds(time.getSeconds() + 0);
       setTimerList((timerList) => [
         ...timerList,
         {
           timeoutSeconds: 0,
           id: `${result.value} ${timerList.length}`,
-          expiryTimestamp: time,
+          expiryTimestamp: 0,
         },
       ]);
     });

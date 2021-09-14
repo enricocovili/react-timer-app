@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import { TextField } from "@material-ui/core";
-import { IconButton } from "@material-ui/core";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import PauseIcon from "@material-ui/icons/Pause";
-import ReplayIcon from "@material-ui/icons/Replay";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import TimePicker from "@material-ui/lab/TimePicker";
 import TitleBar from "./TitleBar";
+import TimeButtons from "./TimeButtons";
 import * as utils from "../utils";
 import "../../index.css";
 
@@ -21,6 +18,9 @@ export default function FullTimer(props) {
       autoStart: false,
       expiryTimestamp,
       onExpire: () => {
+        let time = utils.parseTime(input);
+        restart(time);
+        pause();
         utils.playAudio(id);
       },
     });
@@ -40,55 +40,25 @@ export default function FullTimer(props) {
 
   if (isHidden) return <></>;
 
-  function TimeButtons() {
-    return (
-      <div className="buttons">
-        <IconButton
-          // style={{ color: "white" }}
-          onClick={() => {
-            if (!isRunning) {
-              if (!clockValues.every((e) => Boolean(e))) {
-                let time = utils.parseTime(input);
-                if (!time) return;
-                restart(time);
-              } else {
-                resume();
-              }
-            } else {
-              pause();
-            }
-          }}
-        >
-          {!isRunning ? <PlayArrowIcon /> : <PauseIcon />}
-        </IconButton>
-        <IconButton
-          // style={{ color: "white" }}
-          onClick={() => {
-            let time = utils.parseTime(input);
-            restart(time);
-            pause();
-          }}
-        >
-          <ReplayIcon />
-        </IconButton>
-      </div>
-    );
-  }
-
   function TimerBody() {
     return (
       <div className="clock buttons">
-        <div className="clock">
-          <div className="actual-timer">
-            {clockValues.map((item, index) => (
-              <>
-                <div>{item < 10 ? `0${item}` : item}</div>
-                {index === clockValues.length - 1 ? "" : ":"}
-              </>
-            ))}
-          </div>
+        <div className="actual-timer">
+          {clockValues.map((item, index) => (
+            <>
+              <div>{item < 10 ? `0${item}` : item}</div>
+              {index === clockValues.length - 1 ? "" : ":"}
+            </>
+          ))}
         </div>
-        <TimeButtons />
+        <TimeButtons
+          pause={() => pause()}
+          resume={() => resume()}
+          restart={(time) => restart(time)}
+          isRunning={() => isRunning}
+          clockValues={() => clockValues}
+          input={() => input}
+        />
       </div>
     );
   }
