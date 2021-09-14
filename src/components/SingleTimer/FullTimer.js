@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import { TextField } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import ReplayIcon from "@material-ui/icons/Replay";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import TimePicker from "@material-ui/lab/TimePicker";
-import { parseTime, getInputStorage, playAudio, getIdName } from "./utils";
-
+import TitleBar from "./TitleBar";
+import * as utils from "../utils";
 import "../../index.css";
 
 export default function FullTimer(props) {
@@ -22,18 +21,18 @@ export default function FullTimer(props) {
       autoStart: false,
       expiryTimestamp,
       onExpire: () => {
-        playAudio(id);
+        utils.playAudio(id);
       },
     });
 
   const clockValues = [hours, minutes, seconds];
 
-  const [input, setInput] = useState(getInputStorage());
+  const [input, setInput] = useState(utils.getInputStorage(id));
 
   useEffect(() => {
     localStorage.setItem(`input ${id}`, JSON.stringify(input));
-    updateTimeoutSeconds(parseTime(input, true));
-    let time = parseTime(input);
+    updateTimeoutSeconds(utils.parseTime(input, true));
+    let time = utils.parseTime(input);
     restart(time);
     pause();
     // eslint-disable-next-line
@@ -48,8 +47,8 @@ export default function FullTimer(props) {
           // style={{ color: "white" }}
           onClick={() => {
             if (!isRunning) {
-              if (!(hours || minutes || seconds)) {
-                let time = parseTime(input);
+              if (!clockValues.every((e) => Boolean(e))) {
+                let time = utils.parseTime(input);
                 if (!time) return;
                 restart(time);
               } else {
@@ -65,31 +64,12 @@ export default function FullTimer(props) {
         <IconButton
           // style={{ color: "white" }}
           onClick={() => {
-            let time = parseTime(input);
+            let time = utils.parseTime(input);
             restart(time);
             pause();
           }}
         >
           <ReplayIcon />
-        </IconButton>
-      </div>
-    );
-  }
-
-  function TitleBar() {
-    return (
-      <div className="title-bar">
-        <h2>{getIdName(id)}</h2>
-        <IconButton
-          // style={{ color: "white" }}
-          aria-label="delete"
-          color="default"
-          onClick={() => {
-            localStorage.removeItem(`input ${id}`);
-            removeTimer();
-          }}
-        >
-          <DeleteIcon />
         </IconButton>
       </div>
     );
@@ -115,7 +95,7 @@ export default function FullTimer(props) {
 
   return (
     <section className="wrapper">
-      <TitleBar />
+      <TitleBar id={id} removeTimer={removeTimer} />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <TimePicker
           ampm={false}
@@ -133,7 +113,7 @@ export default function FullTimer(props) {
               // style={{ color: "white" }}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
-                  let time = parseTime(input);
+                  let time = utils.parseTime(input);
                   restart(time);
                 }
               }}

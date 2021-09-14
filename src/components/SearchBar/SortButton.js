@@ -4,7 +4,9 @@ import { MenuItem } from "@material-ui/core";
 import SortIcon from "@material-ui/icons/Sort";
 import { IconButton } from "@material-ui/core";
 
-const SortButton = ({ sortList }) => {
+function SortButton(props) {
+  const { sortList } = props;
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
@@ -49,6 +51,6 @@ const SortButton = ({ sortList }) => {
       </Menu>
     </>
   );
-};
+}
 
 export default SortButton;
