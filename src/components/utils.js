@@ -1,4 +1,4 @@
-import audioURL from "../../media/Leapfrog.ogg";
+import audioURL from "../media/Leapfrog.ogg";
 import Swal from "sweetalert2";
 
 export function getIdName(id) {
